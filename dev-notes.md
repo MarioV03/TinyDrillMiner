@@ -1,7 +1,7 @@
 # Notes on developing Tiny Drill Miner 
 ### A remake of Icekkile's Little Drill Miner
 
-Icekkile's Little Drill Miner - in progress, made /w Unity game engine
+[Icekkile's Little Drill Miner](https://github.com/Icekkile/LittleDrillMiner) - in progress, made /w Unity game engine
 
 
 ## Dev process diary
@@ -18,6 +18,7 @@ time | notes
 23:00 | CSS done, break
 23:37 | back to phaser tutorial. Also creating some placeholder pixel art
 01:27 | got some assets loaded, everything is behaving weird. Sleep now
+
 *Summary: phaser is weird, cannot do it without studying properly. But that's a job for another day*
 *Planning: 3-4 hours. Hacking 'round: most of the time. Actual game work: 0 seconds*
 
