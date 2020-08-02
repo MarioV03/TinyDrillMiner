@@ -1,0 +1,12 @@
+canvas {
+   display: block;
+   border: ivory 5px solid;
+   border-radius: 3px;
+   margin: auto;
+}
+
+body {
+   margin: 8px;
+   align-content: center;
+   background-color: rgb(20, 49, 87);
+}
