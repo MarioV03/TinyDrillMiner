@@ -7,7 +7,7 @@
 ## Dev process diary
 
 **Day 1:**
-time | notes
+Time | Notes
 -----|------
 10:00 | Reasearch on HTML game engines (never used one before xD)
 12:00 | Planning the architechture and the logic of the game
@@ -23,3 +23,12 @@ time | notes
 *Planning: 3-4 hours. Hacking 'round: most of the time. Actual game work: 0 seconds*
 
 **Day 2:**
+Time | Notes
+-----|------
+15:00 | Learning the engine. Docs are confusing while tutorial doesn't have the suff I need
+17:20 | Nooooooo, I've lost my notes! (Had reset to previous commit). Anyway, I'm trying to figure out spritesheets. I really do not understand why on earth they don't work properly 3:
+18:24 | Spritesheets didn't work cuz I spelled 'Height' as 'Hight'. I'm helpless...
+22:40 | Finally, things are coming together. Now implementing UI system /w containers
+23:33 | Buttons capable of calling given function - DONE :tick:
+
+*Summary: spent all the time studying basics of the engine, things finally make sence*

@@ -1,31 +1,25 @@
-let config = {
-    type: Phaser.AUTO,
+const config =
+{
     width: WIDTH,
     height: HEIGHT,
+    parent: 'game',
+    backgroundColor: '#cc4',
+
     pixelArt: true,
-    scene: {
-        preload: preload,
-        create: create,
-        update: update
-    }
+    scale: {zoom: 5},
+    type: Phaser.AUTO,
+
+    physics:
+    {
+        default: 'arcade',
+        arcade:
+        {
+            gravity: {y: 0},
+            debug: true
+        }
+    },
+
+    scene: [Menu, Endless]
 };
 
-var game = new Phaser.Game(config);
-
-function preload ()
-{
-    this.load.image('BG', 'assets/background.png');
-    this.load.spritesheet('drill', 'assets/drill.png', { frameWidth: 16, frameHeight: 16 });
-}
-
-function create ()
-{
-    this.add.image(WIDTH/2, HEIGHT/2, 'BG');
-    player = this.add.sprite(100, 450, 'drill');
-    player.anims.add('idle');
-    player.anims.play('idle, 50, true')
-}
-
-function update ()
-{
-}
+new Phaser.Game(config);
