@@ -42,3 +42,5 @@ Time | Notes
 21:23 | Redoing drill sprite
 21:40 | Drill animation done
 23:12 | Drill movement done (yeah, I'm slow)
+00:17 | Tiling and camera scrolling done
+01:27 | Nah, I don't need pysics engine there... tilig and camera on the whole scene added, generation abstacted away
