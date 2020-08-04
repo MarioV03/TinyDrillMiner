@@ -22,4 +22,4 @@ const config =
     scene: [Menu, Endless]
 };
 
-new Phaser.Game(config);
+let game = new Phaser.Game(config);

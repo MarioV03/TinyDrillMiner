@@ -29,6 +29,16 @@ Time | Notes
 17:20 | Nooooooo, I've lost my notes! (Had reset to previous commit). Anyway, I'm trying to figure out spritesheets. I really do not understand why on earth they don't work properly 3:
 18:24 | Spritesheets didn't work cuz I spelled 'Height' as 'Hight'. I'm helpless...
 22:40 | Finally, things are coming together. Now implementing UI system /w containers
-23:33 | Buttons capable of calling given function - DONE :tick:
+23:33 | Buttons capable of calling given function - DONE
 
 *Summary: spent all the time studying basics of the engine, things finally make sence*
+
+**Day 3:**
+Time | Notes
+-----|------
+19:00 | Learning how to create animations
+19:40 | Break
+21:00 | Ok, back to coding. Trying tp create drill gameobject
+21:23 | Redoing drill sprite
+21:40 | Drill animation done
+23:12 | Drill movement done (yeah, I'm slow)

@@ -20,7 +20,7 @@ class Menu extends Phaser.Scene
       this.add.image(WIDTH / 2, HEIGHT / 2, 'bg');
       //this.add.image(0, 0, 'play_p');
 
-      const play = new Button(this, WIDTH / 2, HEIGHT / 2, 'play_up', 'play_over', 'play_down', () => {this.scene.start('Enless')});
+      const play = new Button(this, WIDTH / 2, HEIGHT / 2, 'play_up', 'play_over', 'play_down', () => {this.scene.start('Endless')});
       this.add.existing(play);
       console.log('button created')
 
