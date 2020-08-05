@@ -13,22 +13,36 @@ class Endless extends Phaser.Scene {
 
       // Generator and tile buffer
       this.terrain = new Generator(1234);
+      this.tileBuffer = [];
 
-      this.tileBufferDown = [];
-      this.tileBufferLeft = [];
-      this.tileBufferRight = [];
+      this.shiftTileBuffer = function () {
+         this.tileBuffer.shift().forEach(element => {
+            element.setActive(false);
+         });
+
+         let newrow = [];
+         for (let i = 0; i < 128; i++) {
+            let y = this.tileBuffer[17][0].y + 8;
+            newrow.push(this.add.image(i*8+4, y, this.terrain.getBlock(i, (y-4)/8)));
+
+         }
+         this.tileBuffer.push(newrow);
+      };
 
       this.bg = this.add.tileSprite(0, 0, this.terrain.width * 8, this.terrain.height * 8, 'dirt_b');
-      
-      for (let x = 0; x < 32; x++) {
-         for (let y = 0; y < 18; y++) {
-            this.add.image(x*8 + 4, y*8 + 4, this.terrain.getBlock(x, y));
+
+      for (let y = 0; y < 19; y++) {
+         this.tileBuffer.push([]);
+         for (let x = 0; x < 128; x++) {
+            this.tileBuffer[y].push(this.add.image(x * 8 + 4, y * 8 + 4, this.terrain.getBlock(x, y)));
          }
       }
+
       this.bg.setOrigin(0, 0);
 
       //adding drill
       this.drill = this.add.sprite(WIDTH / 2, 8, 'drill');
+      this.drill.depth = 1;
       this.anims.create
          ({
             key: 'idle',
@@ -38,6 +52,14 @@ class Endless extends Phaser.Scene {
          });
 
       this.drill.isMoving = false;
+      this.drill.checkCell = function (xoff, yoff, tiles) {
+         let row, block;
+         row = tiles[(this.y - tiles[0][0].y + 4) / 8 + yoff];
+         block = row[this.x / 8 + xoff];
+         if (block.visible)
+            return block;
+      };
+      this.drill.collect = function (item) { };
       this.drill.anims.play('idle');
 
 
@@ -46,34 +68,79 @@ class Endless extends Phaser.Scene {
 
       // Camera
       this.cameras.main.startFollow(this.drill);
-      this.cameras.main.setBounds(0, 0, this.terrain.width * 8, this.terrain.height * 8)
+      this.cameras.main.setBounds(0, 0, this.terrain.width * 8, this.terrain.height * 8);
+
+      // Flags
+      {
+         this.shiftTileBufferFlag = false;
+      }
    }
    update() {
       // DRILL MOVEMENT
+      {
+         // Moving down
+         if (!this.drill.isMoving && this.keyboard.S.isDown === true) {
+            this.drill.isMoving = 'down';
+            this.drill.angle = 0;
+            this.drill.y++;
+            if(this.drill.y > HEIGHT/2) this.shiftTileBufferFlag = true;
+         }
+         if (this.drill.isMoving == 'down') this.drill.y++;
 
+         // Moving left
+         if (!this.drill.isMoving && this.keyboard.A.isDown === true && this.drill.x > 8) {
+            this.drill.isMoving = 'left';
+            this.drill.angle = 90;
+            this.drill.x--;
+         }
+         if (this.drill.isMoving == 'left') this.drill.x--;
+
+         // Moving right
+         if (!this.drill.isMoving && this.keyboard.D.isDown === true && this.drill.x < this.terrain.width * 8 - 8) {
+            this.drill.isMoving = 'right';
+            this.drill.angle = 270;
+            this.drill.x++;
+         }
+         if (this.drill.isMoving == 'right') this.drill.x++;
+      }
+
+      // Generating next row of tiles
+      if (this.shiftTileBufferFlag) {
+         this.shiftTileBufferFlag = false;
+         this.shiftTileBuffer();
+      }
+
+      console.log();
+
+      // Tile mining
       if (this.drill.x % 8 == 0 && this.drill.y % 8 == 0) this.drill.isMoving = false;
-      // Moving down
-      if (!this.drill.isMoving && this.keyboard.S.isDown === true) {
-         this.drill.isMoving = 'down';
-         this.drill.angle = 0;
-         this.drill.y++;
+      // se
+      if (!this.drill.isMoving && this.drill.checkCell(0, 0, this.tileBuffer)) {
+         let block = this.drill.checkCell(0, 0, this.tileBuffer);
+         this.drill.collect(block);
+         block.setActive(false);
+         block.setVisible(false);
       }
-      if (this.drill.isMoving == 'down') this.drill.y++;
-
-      // Moving left
-      if (!this.drill.isMoving && this.keyboard.A.isDown === true && this.drill.x > 8) {
-         this.drill.isMoving = 'left';
-         this.drill.angle = 90;
-         this.drill.x--;
+      // sw
+      if (!this.drill.isMoving && this.drill.checkCell(-1, 0, this.tileBuffer)) {
+         let block = this.drill.checkCell(-1, 0, this.tileBuffer);
+         this.drill.collect(block);
+         block.setActive(false);
+         block.setVisible(false);
       }
-      if (this.drill.isMoving == 'left') this.drill.x--;
-
-      // Moving right
-      if (!this.drill.isMoving && this.keyboard.D.isDown === true && this.drill.x < this.terrain.width * 8 - 8) {
-         this.drill.isMoving = 'right';
-         this.drill.angle = 270;
-         this.drill.x++;
+      // nw
+      if (!this.drill.isMoving && this.drill.checkCell(-1, -1, this.tileBuffer)) {
+         let block = this.drill.checkCell(-1, -1, this.tileBuffer);
+         this.drill.collect(block);
+         block.setActive(false);
+         block.setVisible(false);
       }
-      if (this.drill.isMoving == 'right') this.drill.x++;
+      // ne
+      if (!this.drill.isMoving && this.drill.checkCell(0, -1, this.tileBuffer)) {
+         let block = this.drill.checkCell(0, -1, this.tileBuffer);
+         this.drill.collect(block);
+         block.setActive(false);
+         block.setVisible(false);
+      }
    }
 }

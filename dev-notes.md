@@ -44,3 +44,13 @@ Time | Notes
 23:12 | Drill movement done (yeah, I'm slow)
 00:17 | Tiling and camera scrolling done
 01:27 | Nah, I don't need pysics engine there... tilig and camera on the whole scene added, generation abstacted away
+
+*That was quite productive*
+
+**Day 4:**
+Time | Notes
+-----|------
+22:00 | Late start today. Working on placing and destroying tiles
+23:24 | Placing tiles in chunks and deactivating passed chunks - done
+00:06 | For some reason I get a lot of undefined errors whin trying to check the cells the drill stands on. Debugging is horrible. I miss stati typing :((
+01:26 | Core mechanics implemented (creating terrain, moving, mining)
