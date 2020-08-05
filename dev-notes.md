@@ -54,3 +54,6 @@ Time | Notes
 23:24 | Placing tiles in chunks and deactivating passed chunks - done
 00:06 | For some reason I get a lot of undefined errors whin trying to check the cells the drill stands on. Debugging is horrible. I miss stati typing :((
 01:26 | Core mechanics implemented (creating terrain, moving, mining)
+02:08 | And finally some basic perlin noise ore generation - onto the fun part!
+
+*Generation, yeah!!! Frankly, the code I wrote for the core game mechanics is terrible and mostly does not use the engine in a proper way. It'll need quite a bit of refactoring, which I'll do when I know the API better. But right now I want to do GENERATION!!!*

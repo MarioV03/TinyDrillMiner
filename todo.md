@@ -1,6 +1,6 @@
 ### To-do list:
-- [ ] learn spritesheet loading and animation
+- [x] learn spritesheet loading and animation
 - [ ] check tilemaps
-- [ ] more placeholder art/some proper art
-- [ ] learn GameObjects
+- [x] more placeholder art/some proper art
+- [x] learn GameObjects
 - [ ] learn SceneManager

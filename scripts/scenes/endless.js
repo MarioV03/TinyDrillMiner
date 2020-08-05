@@ -6,6 +6,7 @@ class Endless extends Phaser.Scene {
    preload() {
       this.load.image('bg', 'assets/background.png');
       this.load.image('dirt_b', 'assets/dirt_back.png');
+      this.load.image('iron', 'assets/iron.png');
       this.load.image('dirt', 'assets/dirt.png');
       this.load.spritesheet('drill', 'assets/drill.png', { frameWidth: 16, frameHeight: 16 });
    }
@@ -41,7 +42,7 @@ class Endless extends Phaser.Scene {
       this.bg.setOrigin(0, 0);
 
       //adding drill
-      this.drill = this.add.sprite(WIDTH / 2, 8, 'drill');
+      this.drill = this.add.sprite(this.terrain.width * 4, 8, 'drill');
       this.drill.depth = 1;
       this.anims.create
          ({
@@ -79,7 +80,7 @@ class Endless extends Phaser.Scene {
       // DRILL MOVEMENT
       {
          // Moving down
-         if (!this.drill.isMoving && this.keyboard.S.isDown === true) {
+         if (!this.drill.isMoving && this.keyboard.S.isDown === true && this.drill.y < this.terrain.height * 8 - 8) {
             this.drill.isMoving = 'down';
             this.drill.angle = 0;
             this.drill.y++;
