@@ -65,3 +65,5 @@ Time | Notes
 13:30 | Art
 14:10 | Adding logo and new button to the main menu
 18:00 | Main manu completely renewed (looks great!), created all of the basic textures
+
+*The game finally looks good!*
