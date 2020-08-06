@@ -32,12 +32,6 @@ class Button extends Phaser.GameObjects.Container
             this.downImage.setVisible(false);
             this.upImage.setVisible(false);
          })
-         .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () =>
-         {
-            this.overImage.setVisible(false);
-            this.downImage.setVisible(true);
-            this.upImage.setVisible(false);
-         })
          .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () =>
          {
             this.overImage.setVisible(false);

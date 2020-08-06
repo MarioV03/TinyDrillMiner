@@ -57,3 +57,8 @@ Time | Notes
 02:08 | And finally some basic perlin noise ore generation - onto the fun part!
 
 *Generation, yeah!!! Frankly, the code I wrote for the core game mechanics is terrible and mostly does not use the engine in a proper way. It'll need quite a bit of refactoring, which I'll do when I know the API better. But right now I want to do GENERATION!!!*
+
+**Day 4:**
+Time | Notes
+-----|------
+13:00 | Added some terraria music just for fun
