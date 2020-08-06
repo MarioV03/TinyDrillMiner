@@ -58,7 +58,10 @@ Time | Notes
 
 *Generation, yeah!!! Frankly, the code I wrote for the core game mechanics is terrible and mostly does not use the engine in a proper way. It'll need quite a bit of refactoring, which I'll do when I know the API better. But right now I want to do GENERATION!!!*
 
-**Day 4:**
+**Day 4 - Art Day:**
 Time | Notes
 -----|------
 13:00 | Added some terraria music just for fun
+13:30 | Art
+14:10 | Adding logo and new button to the main menu
+18:00 | Main manu completely renewed (looks great!), created all of the basic textures
