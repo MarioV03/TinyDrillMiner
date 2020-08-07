@@ -65,5 +65,13 @@ Time | Notes
 13:30 | Art
 14:10 | Adding logo and new button to the main menu
 18:00 | Main manu completely renewed (looks great!), created all of the basic textures
+23:00 | Implementing generator object structure
+00:34 | Having some trouble /w OOP-style generation, continuing tomorrow
 
-*The game finally looks good!*
+*The game finally looks good! And the generation gets more customizable*
+
+**Day 5 - Refactoring:**
+Time | Notes
+-----|------
+08:30 | Fixing bugs in generative algorithm. I'm on the train though, so the work is inconsistent
+11:00 | Generator object structure - done. Now to autometing generation functions for individual tiles

@@ -11,7 +11,8 @@ class Endless extends Phaser.Scene {
    create() {
 
       // Generator and tile buffer
-      this.terrain = new Generator(1234);
+      this.terrain = new Terrain(1234, [dirtLayer]);
+      console.log(this.terrain.height)
       this.tileBuffer = [];
 
       this.shiftTileBuffer = function () {
@@ -20,9 +21,9 @@ class Endless extends Phaser.Scene {
          });
 
          let newrow = [];
-         for (let i = 0; i < 128; i++) {
+         for (let i = 0; i < this.terrain.width; i++) {
             let y = this.tileBuffer[17][0].y + 8;
-            newrow.push(this.add.image(i*8+4, y, this.terrain.getBlock(i, (y-4)/8)));
+            newrow.push(this.add.image(i*8+4, y, this.terrain.getOre(i, (y-4)/8)));
 
          }
          this.tileBuffer.push(newrow);
@@ -33,7 +34,7 @@ class Endless extends Phaser.Scene {
       for (let y = 0; y < 19; y++) {
          this.tileBuffer.push([]);
          for (let x = 0; x < 128; x++) {
-            this.tileBuffer[y].push(this.add.image(x * 8 + 4, y * 8 + 4, this.terrain.getBlock(x, y)));
+            this.tileBuffer[y].push(this.add.image(x * 8 + 4, y * 8 + 4, this.terrain.getOre(x, y)));
          }
       }
 
@@ -82,7 +83,7 @@ class Endless extends Phaser.Scene {
             this.drill.isMoving = 'down';
             this.drill.angle = 0;
             this.drill.y++;
-            if(this.drill.y > HEIGHT/2) this.shiftTileBufferFlag = true;
+            if(this.drill.y > HEIGHT/2 && this.drill.y < (this.terrain.height - 10) * 8) this.shiftTileBufferFlag = true;
          }
          if (this.drill.isMoving == 'down') this.drill.y++;
 
@@ -107,9 +108,9 @@ class Endless extends Phaser.Scene {
       if (this.shiftTileBufferFlag) {
          this.shiftTileBufferFlag = false;
          this.shiftTileBuffer();
+         // console.log(this.drill.y / 8 - 0.25, this.terrain.getLayer(this.drill.y / 8))
       }
 
-      console.log();
 
       // Tile mining
       if (this.drill.x % 8 == 0 && this.drill.y % 8 == 0) this.drill.isMoving = false;

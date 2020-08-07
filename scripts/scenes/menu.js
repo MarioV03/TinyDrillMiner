@@ -8,7 +8,6 @@ class Menu extends Phaser.Scene
    preload()
    {
       this.load.image('bg', 'assets/bg.png');
-      this.load.image('crystal', 'assets/crystal.png');
 
       this.load.image('logo', 'assets/logo.png');
       this.load.image('logo_over', 'assets/logo_over.png');
@@ -21,15 +20,14 @@ class Menu extends Phaser.Scene
       
       this.load.image('play_up', 'assets/play_btn_up.png');
       this.load.image('play_over', 'assets/play_btn_over.png');
-      this.load.image('play_down', 'assets/play_btn_down.png');
 
       this.load.image('dirt', 'assets/dirt.png');
-      this.load.image('sand', 'assets/iron.png');
-      this.load.image('stone', 'assets/dirt.png');
-      this.load.image('coal', 'assets/iron.png');
-      this.load.image('copper', 'assets/dirt.png');
+      this.load.image('sand', 'assets/sand.png');
+      this.load.image('stone', 'assets/stone.png');
+      this.load.image('coal', 'assets/coal.png');
+      this.load.image('copper', 'assets/copper.png');
       this.load.image('iron', 'assets/iron.png');
-      this.load.image('gold', 'assets/dirt.png');
+      this.load.image('gold', 'assets/gold.png');
    }
 
    create()
