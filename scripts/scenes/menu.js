@@ -8,6 +8,7 @@ class Menu extends Phaser.Scene
    preload()
    {
       this.load.image('bg', 'assets/bg.png');
+      this.load.image('dirt_b', 'assets/dirt_back.png');
 
       this.load.image('logo', 'assets/logo.png');
       this.load.image('logo_over', 'assets/logo_over.png');
@@ -21,6 +22,8 @@ class Menu extends Phaser.Scene
       this.load.image('play_up', 'assets/play_btn_up.png');
       this.load.image('play_over', 'assets/play_btn_over.png');
 
+      
+      // Ore textures
       this.load.image('dirt', 'assets/dirt.png');
       this.load.image('sand', 'assets/sand.png');
       this.load.image('stone', 'assets/stone.png');
@@ -43,7 +46,7 @@ class Menu extends Phaser.Scene
 
       const info = new Button(this, WIDTH / 2 - 13, 101, 'info', 'info_over', 'info', () => 
       {
-         this.scene.start('Endless')
+         this.scene.start('MapView')
       });
       this.add.existing(info);
 

@@ -140,7 +140,9 @@ class Terrain {
 const Ores = {
    dirt: new TileData('dirt', 1, null, null),
    iron: new TileData('iron', 5, OreGenerator.perlin, {scaleX: 13, scaleY: 13, offX: 0, offY: 0, threshold: 0.9}),
-   coal: new TileData('coal', 5, OreGenerator.perlin, {scaleX: 11, scaleY: 11, offX: 2, offY: 4, threshold: 0.8})
+   coal: new TileData('coal', 5, OreGenerator.perlin, {scaleX: 11, scaleY: 11, offX: 2, offY: 4, threshold: 0.8}),
+   gold: new TileData('gold', 3, OreGenerator.perlin, {scaleX: 5, scaleY: 5, offX: 1, offY: 1, threshold: 0.9}),
+   sand: new TileData('sand', 5, OreGenerator.perlin, {scaleX: 11, scaleY: 11, offX: 0, offY: 0, threshold: 0.3})
 }
 
 console.log(Ores['dirt']);
@@ -156,3 +158,8 @@ let dirtConfig = {
 
 // LAYERS
 let dirtLayer = new Layer('Dirt layer', 64, dirtConfig);
+let sandFiealds = new Layer('The underground desert', 64, {
+   baseOre: Ores.dirt,
+   ores: [Ores.sand],
+   obstacles: []
+});

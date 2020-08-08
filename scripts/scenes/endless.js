@@ -5,7 +5,6 @@ class Endless extends Phaser.Scene {
 
    preload() {
       this.load.image('bg', 'assets/background.png');
-      this.load.image('dirt_b', 'assets/dirt_back.png');
       this.load.spritesheet('drill', 'assets/drill.png', { frameWidth: 16, frameHeight: 16 });
    }
    create() {

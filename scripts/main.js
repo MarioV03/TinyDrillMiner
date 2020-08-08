@@ -19,7 +19,7 @@ const config =
         }
     },
 
-    scene: [Menu, Endless]
+    scene: [Menu, Endless, MapView]
 };
 
 let game = new Phaser.Game(config);
