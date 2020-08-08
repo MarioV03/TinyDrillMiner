@@ -1,21 +1,77 @@
-function perlin(x, y)
-{
+function perlin(x, y) {
    return noise.perlin2(x, y) + 0.5;
 }
 
-class TileData {
-   constructor(name, hardness, generate) {
-      this.name = name; // must be the same as the name of the texture
-      this.hardness = hardness;
-      this.generate = generate;
+
+let OreGenerator = {
+   baseTile: function (x, y, c) {
+      return true;
+   },
+   perlin: function (x, y, perlinConfig) {
+      return perlin(x / perlinConfig.scaleX + perlinConfig.offX, y / perlinConfig.scaleY + perlinConfig.offY) > perlinConfig.threshold;
    }
 }
+
+function pp(x, y, perlinConfig) {
+   return perlin(x / perlinConfig.scaleX + perlinConfig.offX, y / perlinConfig.scaleY + perlinConfig.offY) > perlinConfig.threshold;
+}
+
+
+let conf = {
+   scaleX: 13,
+   scaleY: 13,
+   offX: 0,
+   offY: 0,
+   threshold: 0.9
+}
+
+
+const perlinGeneration = {
+   perlin: {
+      scaleX: 13,
+      scaleY: 13,
+      offX: 0,
+      offY: 0,
+      threshold: 0.9
+   },
+
+   create: function () {
+      return Object.create(perlinGeneration);
+   },
+
+   offset: function (off) {
+      this.perlin.offX = off;
+      this.perlin.offY = off;
+      return this;
+   },
+
+   scale: function (s) {
+      this.perlin.scaleX = s;
+      this.perlin.scaleY = s;
+      return this;
+   }
+}
+
+class TileData {
+   constructor(name, hardness, oreGenFunction, oreGenConfig) {
+      this.name = name; // must be the same as the name of the texture
+      this.hardness = hardness;
+      this.genFunction = oreGenFunction;
+      this.genConfig = oreGenConfig;
+   }
+
+   generate(x, y) {
+         return this.genFunction(x, y, this.genConfig);
+   }
+}
+
+let td = new TileData('test', 8, perlinGeneration.create().offset(5.5));
 
 
 class Layer {
    constructor(name, thickness, genConfig) {
       this.name = name;
-      this.thickness = thickness
+      this.thickness = thickness;
       this.baseOre = genConfig.baseOre;
       this.ores = genConfig.ores;
       this.obstacles = genConfig.obstacles;
@@ -25,10 +81,10 @@ class Layer {
       let result = false;
       for (const ore in this.ores) {
          if (this.ores[ore].generate(x, y))
-         result = this.ores[ore].generate(x, y);
-      }      
-      if (!result) return this.baseOre.name;
-      return result;
+            result = this.ores[ore];
+      }
+      if (result == false) return this.baseOre.name;
+      return result.name;
    }
 
    getObsacle(x, y) {
@@ -64,7 +120,7 @@ class Terrain {
          i++;
       }
    }
-   
+
    getOre(x, y) {
       let layer = this.getLayer(y);
       if (layer == -1) return console.log("Generator out of bounds");
@@ -81,19 +137,21 @@ class Terrain {
 
 
 // --- Cofigurations ---
-
-
-let Ores = {
-   dirt: new TileData('dirt', 1, function () {return}),
-   iron: new TileData('iron', 5, function (x, y) { if (perlin(x/11, y/11) > 0.8) return 'iron';}),
-   coal: new TileData('iron', 5, function (x, y) { if (perlin(x/13 + 5, y/13 + 5.5) > 0.8) return 'coal';})
+const Ores = {
+   dirt: new TileData('dirt', 1, null, null),
+   iron: new TileData('iron', 5, OreGenerator.perlin, {scaleX: 13, scaleY: 13, offX: 0, offY: 0, threshold: 0.9}),
+   coal: new TileData('coal', 5, OreGenerator.perlin, {scaleX: 11, scaleY: 11, offX: 2, offY: 4, threshold: 0.8})
 }
+
+console.log(Ores['dirt']);
+
+Object.freeze(Ores);
 
 // terrainConfigs
 let dirtConfig = {
    baseOre: Ores.dirt,
-   ores: [Ores.iron, Ores.coal],
-   obstacles:[]
+   ores: [Ores.coal, Ores.iron],
+   obstacles: []
 }
 
 // LAYERS

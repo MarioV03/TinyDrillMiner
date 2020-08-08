@@ -12,7 +12,6 @@ class Endless extends Phaser.Scene {
 
       // Generator and tile buffer
       this.terrain = new Terrain(1234, [dirtLayer]);
-      console.log(this.terrain.height)
       this.tileBuffer = [];
 
       this.shiftTileBuffer = function () {
@@ -117,28 +116,28 @@ class Endless extends Phaser.Scene {
       // se
       if (!this.drill.isMoving && this.drill.checkCell(0, 0, this.tileBuffer)) {
          let block = this.drill.checkCell(0, 0, this.tileBuffer);
-         this.drill.collect(block);
+         this.drill.collect(block.texture.key);
          block.setActive(false);
          block.setVisible(false);
       }
       // sw
       if (!this.drill.isMoving && this.drill.checkCell(-1, 0, this.tileBuffer)) {
          let block = this.drill.checkCell(-1, 0, this.tileBuffer);
-         this.drill.collect(block);
+         this.drill.collect(block.texture.key);
          block.setActive(false);
          block.setVisible(false);
       }
       // nw
       if (!this.drill.isMoving && this.drill.checkCell(-1, -1, this.tileBuffer)) {
          let block = this.drill.checkCell(-1, -1, this.tileBuffer);
-         this.drill.collect(block);
+         this.drill.collect(block.texture.key);
          block.setActive(false);
          block.setVisible(false);
       }
       // ne
       if (!this.drill.isMoving && this.drill.checkCell(0, -1, this.tileBuffer)) {
          let block = this.drill.checkCell(0, -1, this.tileBuffer);
-         this.drill.collect(block);
+         this.drill.collect(block.texture.key);
          block.setActive(false);
          block.setVisible(false);
       }

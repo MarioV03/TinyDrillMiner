@@ -75,3 +75,10 @@ Time | Notes
 -----|------
 08:30 | Fixing bugs in generative algorithm. I'm on the train though, so the work is inconsistent
 11:00 | Generator object structure - done. Now to autometing generation functions for individual tiles
+12:00 | Ok, no more coding today
+
+**Day 6**
+Time | Notes
+-----|------
+06:45 | Early start. Fixing generative functions
+18:25 | OOP-style generative script done. Now onto "generation view" scene
