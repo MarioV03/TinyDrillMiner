@@ -91,25 +91,28 @@ class Terrain {
       }
    }
 
-   getLayer(y) {
+   getLayer(x, y) {
       let i = 0;
       while (true) {
          if (!this.layers[i]) return -1;
-         if (y < this.layers[i].thickness) return i;
+         if (y < this.layers[i].thickness) {
+            if(this.layers[i].thickness - y == 1 && this.layers[i+1]) return i + Math.floor(1.9*perlin(x/23, y));
+            if(this.layers[i].thickness - y == 2 && this.layers[i+1]) return i + Math.floor(1.4 *perlin(x/23, y + 1));
+            return i;
+         }
          y -= this.layers[i].thickness;
          i++;
       }
    }
 
    getOre(x, y) {
-      let layer = this.getLayer(y);
+      let layer = this.getLayer(x, y);
       if (layer == -1) return console.log("Generator out of bounds");
-      // console.log('global gen');
       return this.layers[layer].getOre(x, y);
    }
 
    getObsacle(x, y) {
-      let layer = this.getLayer(y);
+      let layer = this.getLayer(x, y);
       this.layers[layer].getObsacle(x, y);
    }
 }
@@ -145,5 +148,5 @@ const LayerConfigs = {
 
 
 // LAYERS
-let dirtLayer = new Layer('Dirt layer', 32, LayerConfigs.dirtLayer);
-let sandFiealds = new Layer('Sands', 32, LayerConfigs.sandLayer);
+let dirtLayer = new Layer('Dirt layer', 36, LayerConfigs.dirtLayer);
+let sandFiealds = new Layer('Sands', 28, LayerConfigs.sandLayer);
