@@ -22,6 +22,8 @@ class Menu extends Phaser.Scene
       this.load.image('play_up', 'assets/play_btn_up.png');
       this.load.image('play_over', 'assets/play_btn_over.png');
 
+      this.load.image('back_up', 'assets/back_up.png');
+      this.load.image('back_over', 'assets/back_over.png');
       
       // Ore textures
       this.load.image('dirt', 'assets/dirt.png');

@@ -309,3 +309,7 @@
  
  })(this);
  
+
+ function perlin(x, y) {
+  return noise.perlin2(x, y) + 0.5;
+}

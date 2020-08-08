@@ -5,11 +5,16 @@ class MapView extends Phaser.Scene {
 
    create() {
       this.add.tileSprite(WIDTH / 2, HEIGHT / 2, WIDTH, HEIGHT, 'dirt_b');
-      this.terrain = new Terrain(134, [sandFiealds]);
-      this.add.text(2, 0, 'Map View: ' + this.terrain.layers[0].name, 'black 12pt Lato');
+      this.terrain = new Terrain(Math.random(), [dirtLayer, sandFiealds]);
+      this.add.text(2, 0, 'Map View: ' + this.terrain.layers[0].name, {fontSize:12, fontFamily: 'sans', color: '#cd6'});
       this.index = 0;
       this.x = 0;
       this.y = 0;
+
+      const back = new Button(this, WIDTH - 8, 8, 'back_up', 'back_over', 'back_over', () => {
+         this.scene.start('Menu')
+      });
+      this.add.existing(back);
    }
    update() {
       do {
