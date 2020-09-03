@@ -83,3 +83,8 @@ Time | Notes
 06:45 | Early start. Fixing generative functions
 18:25 | OOP-style generative script done. Now onto "generation view" scene
 7:32 | Added a new scene - map view. Miniature terrain genetarion
+
+**Day 7**
+Time | Notes
+-----|------
+15:00 | Trying to generate root shapes

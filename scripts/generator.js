@@ -15,21 +15,37 @@ let OreGenerator = {
    },
 
    lines(x, y) {
-      let line = (x < -16 + perlin(0.7, y)*24 + perlin(1.6*y, 0.6*y)*128) && (x > perlin(1.6*y, 0.6*y)*128 - 32) && perlin(0.3, y + 3) > 0.86;
-      return line; 
-      return perlin(Math.floor(x /8), Math.floor(y / 8)*5 + 0.7) > 0.7;
+      let line = (x < -16 + perlin(0.7, y) * 24 + perlin(1.6 * y, 0.6 * y) * 128) && (x > perlin(1.6 * y, 0.6 * y) * 128 - 32) && perlin(0.3, y + 3) > 0.86;
+      return line;
+      return perlin(Math.floor(x / 8), Math.floor(y / 8) * 5 + 0.7) > 0.7;
       return (Math.floor(x / 16) % 2 == 0 && Math.floor(y / 8) % 2 != 0)
    },
 
    chunks_v1(x, y) {
-      let tr = 1 + Math.floor(3*perlin(x*0.1, 1.6));
-      let i = -1 -Math.floor(3*perlin(x*0.1, 4.1));
+      let tr = 1 + Math.floor(3 * perlin(x * 0.1, 1.6));
+      let i = -1 - Math.floor(3 * perlin(x * 0.1, 4.1));
 
-      while(i <= tr) {
-         if(OreGenerator.lines(x, y + i)) return true
+      while (i <= tr) {
+         if (OreGenerator.lines(x, y + i)) return true
          i++;
       }
-      return false 
+      return false
+   },
+
+   tree(x, y) {
+      let n = Math.floor(y / 2) + 1;
+      let w = 2 * n - 1;
+      let start = Math.floor((128 - w) / 2);
+      let end = 128 - start;
+      return (x > start) && (x < end) && ((n % 2 == 1 && (x - start) % 2 == 0) || ((x - start) % 4 == 2 && n % 2 == 0));
+   },
+
+   unflold_tree(x, y) {
+      // Origin = 128,3
+      let angle = 2*Math.atan((x - 64)/(y - 3));
+      console.log(angle);
+      let r = Math.sqrt((x - 64)*(x - 64) + (y - 3)*(y - 3))
+      return OreGenerator.tree(64 + Math.floor(r*Math.sin(angle)), 3 + Math.floor(r*Math.cos(angle)));
    }
 }
 
@@ -37,11 +53,12 @@ let OreGenerator = {
 // --- Major structures ---
 
 class TileData {
-   constructor(name, hardness, oreGenFunction, oreGenConfig) {
+   constructor(name, hardness, oreGenFunction, oreGenConfig, drops = true) {
       this.name = name; // must be the same as the name of the texture
       this.hardness = hardness;
       this.genFunction = oreGenFunction;
       this.genConfig = oreGenConfig;
+      this.drops = drops;
    }
 
    generate(x, y) {
@@ -96,8 +113,8 @@ class Terrain {
       while (true) {
          if (!this.layers[i]) return -1;
          if (y < this.layers[i].thickness) {
-            if(this.layers[i].thickness - y == 1 && this.layers[i+1]) return i + Math.floor(1.9*perlin(x/23, y));
-            if(this.layers[i].thickness - y == 2 && this.layers[i+1]) return i + Math.floor(1.4 *perlin(x/23, y + 1));
+            if (this.layers[i].thickness - y == 1 && this.layers[i + 1]) return i + Math.floor(1.9 * perlin(x / 23, y));
+            if (this.layers[i].thickness - y == 2 && this.layers[i + 1]) return i + Math.floor(1.4 * perlin(x / 23, y + 1));
             return i;
          }
          y -= this.layers[i].thickness;
@@ -123,11 +140,12 @@ class Terrain {
 // --- Cofigurations ---
 
 const Ores = {
-   dirt: new TileData('dirt', 1, null, null),
-   stone: new TileData('stone', 1, null, null),
+   dirt: new TileData('dirt', 1, null, null, false),
+   stone: new TileData('stone', 1, null, null, false),
    iron: new TileData('iron', 5, OreGenerator.perlin, { scaleX: 13, scaleY: 13, offX: 0, offY: 0, threshold: 0.9 }),
    coal: new TileData('coal', 5, OreGenerator.perlin, { scaleX: 11, scaleY: 11, offX: 2, offY: 4, threshold: 0.8 }),
-   gold: new TileData('gold', 3, OreGenerator.perlin, { scaleX: 5, scaleY: 5, offX: 1, offY: 1, threshold: 0.9 }),
+   gold: new TileData('gold', 3, OreGenerator.unflold_tree, {}),
+   diamonds: new TileData('diamonds', 3, OreGenerator.perlin, { scaleX: 5, scaleY: 5, offX: 1, offY: 1, threshold: 0.7 }),
    sand: new TileData('sand', 5, OreGenerator.chunks_v1, {})
 }
 
@@ -139,7 +157,7 @@ const LayerConfigs = {
    },
    sandLayer: {
       baseOre: Ores.stone,
-      ores: [Ores.sand],
+      ores: [Ores.sand, Ores.gold],
       obstacles: []
    }
 }
@@ -148,5 +166,8 @@ const LayerConfigs = {
 
 
 // LAYERS
-let dirtLayer = new Layer('Dirt layer', 36, LayerConfigs.dirtLayer);
-let sandFiealds = new Layer('Sands', 28, LayerConfigs.sandLayer);
+let dirtLayer = new Layer('Dirt layer', 34, LayerConfigs.dirtLayer);
+let sandFiealds = new Layer('Sands', 30, LayerConfigs.sandLayer);
+let dia = new Layer('d', 64, { baseOre: Ores.stone, ores: [Ores.diamonds], obstacles: [] })
+
+const level = [dirtLayer, sandFiealds];

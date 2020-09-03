@@ -5,7 +5,7 @@ class MapView extends Phaser.Scene {
 
    create() {
       this.add.tileSprite(WIDTH / 2, HEIGHT / 2, WIDTH, HEIGHT, 'dirt_b');
-      this.terrain = new Terrain(Math.random(), [dirtLayer, sandFiealds]);
+      this.terrain = new Terrain(Math.random(), level);
       this.add.text(2, 0, 'Map View: ' + this.terrain.layers[0].name, {fontSize:12, fontFamily: 'sans', color: '#cd6'});
       this.index = 0;
       this.x = 0;

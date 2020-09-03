@@ -33,6 +33,7 @@ class Menu extends Phaser.Scene
       this.load.image('copper', 'assets/copper.png');
       this.load.image('iron', 'assets/iron.png');
       this.load.image('gold', 'assets/gold.png');
+      this.load.image('diamonds', 'assets/diamonds.png');
    }
 
    create()

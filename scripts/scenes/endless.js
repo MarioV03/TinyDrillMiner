@@ -10,7 +10,7 @@ class Endless extends Phaser.Scene {
    create() {
 
       // Generator and tile buffer
-      this.terrain = new Terrain(1234, [dirtLayer]);
+      this.terrain = new Terrain(1234, level);
       this.tileBuffer = [];
 
       this.shiftTileBuffer = function () {
@@ -57,12 +57,26 @@ class Endless extends Phaser.Scene {
          if (block.visible)
             return block;
       };
-      this.drill.collect = function (item) { };
+      this.energy = 1000;
+      this.inv = {};
+      this.collect = function (item) {
+         console.log('fuel:' + this.energy);
+         console.log(this.inv);
+         let block = Ores[item];
+         this.energy -= block.hardness;
+
+         if(!block.drops) return;
+
+         if(this.inv[item]) this.inv[item]++;
+         else this.inv[item] = 1;
+      };
       this.drill.anims.play('idle');
 
 
       // Input
       this.keyboard = this.input.keyboard.addKeys('A, S, D');
+
+      this.add.image(128*8 - 10, 40, 'drill', 2)
 
       // Camera
       this.cameras.main.startFollow(this.drill);
@@ -74,6 +88,9 @@ class Endless extends Phaser.Scene {
       }
    }
    update() {
+
+      // Game end
+      if(this.energy < 1) this.scene.start('Menu');
       // DRILL MOVEMENT
       {
          // Moving down
@@ -115,28 +132,28 @@ class Endless extends Phaser.Scene {
       // se
       if (!this.drill.isMoving && this.drill.checkCell(0, 0, this.tileBuffer)) {
          let block = this.drill.checkCell(0, 0, this.tileBuffer);
-         this.drill.collect(block.texture.key);
+         this.collect(block.texture.key);
          block.setActive(false);
          block.setVisible(false);
       }
       // sw
       if (!this.drill.isMoving && this.drill.checkCell(-1, 0, this.tileBuffer)) {
          let block = this.drill.checkCell(-1, 0, this.tileBuffer);
-         this.drill.collect(block.texture.key);
+         this.collect(block.texture.key);
          block.setActive(false);
          block.setVisible(false);
       }
       // nw
       if (!this.drill.isMoving && this.drill.checkCell(-1, -1, this.tileBuffer)) {
          let block = this.drill.checkCell(-1, -1, this.tileBuffer);
-         this.drill.collect(block.texture.key);
+         this.collect(block.texture.key);
          block.setActive(false);
          block.setVisible(false);
       }
       // ne
       if (!this.drill.isMoving && this.drill.checkCell(0, -1, this.tileBuffer)) {
          let block = this.drill.checkCell(0, -1, this.tileBuffer);
-         this.drill.collect(block.texture.key);
+         this.collect(block.texture.key);
          block.setActive(false);
          block.setVisible(false);
       }
